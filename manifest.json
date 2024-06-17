@@ -1,0 +1,32 @@
+{
+  "name": "ComponentsGPT",
+  "id": "1327254733414098903",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "capabilities": ["codegen", "inspect", "vscode"],
+  "ui": "src/ui.html",
+  "codegenLanguages": [
+    {
+      "label": "Angular",
+      "value": "angular"
+    },
+    {
+      "label": "React",
+      "value": "react"
+    },
+    {
+      "label": "Vue.js",
+      "value": "vuejs"
+    },
+    {
+      "label": "Svelte",
+      "value": "svelte"
+    }
+  ],
+  "enableProposedApi": false,
+  "editorType": ["dev", "figma"],
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "GPT can make requests to any domain."
+  }
+}

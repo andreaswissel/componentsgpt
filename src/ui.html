@@ -1,0 +1,344 @@
+<style>
+  code {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.15);
+    margin: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+  }
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 45px;
+  }
+
+  @media (max-width: 767px) {
+    .markdown-body {
+      padding: 15px;
+    }
+  }
+</style>
+<link
+  href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+<link href="./styles.css" rel="stylesheet" />
+<link
+  href="https://unpkg.com/prismjs/themes/prism-twilight.css"
+  rel="stylesheet"
+/>
+<script src="https://unpkg.com/marked@3.0.0/marked.min.js"></script>
+<script src="https://unpkg.com/prismjs@1.24.1/prism.js"></script>
+  <h1
+    class="text-2xl flex items-center font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight m-5 mb-0"
+  >
+    ComponentsGPT
+    <a
+      href="#"
+      class="flex-none ml-2 rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+      >BETA</a
+    >
+  </h1>
+
+  <div class="mx-5 my-2">
+    <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
+      >API Key</label
+    >
+    <div class="mt-2">
+      <input
+        type="text"
+        class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+        placeholder="Enter your OpenAI API key here"
+        id="api-key"
+        onchange="onSetApiKey()"
+      />
+    </div>
+  </div>
+
+  <div class="mx-5 mt-5 flex">
+    <div class="isolate inline-flex rounded-md shadow-sm" id="frameworks">
+      <button
+        type="button"
+        onclick="setFramework('Angular')"
+        id="f-angular"
+        class="relative inline-flex items-center rounded-l-md bg-gray-900 text-white px-3 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-slate-100 hover:text-slate-800 focus:z-10"
+      >
+        Angular
+      </button>
+      <button
+        type="button"
+        onclick="setFramework('React')"
+        id="f-react"
+        class="relative -ml-px inline-flex items-center bg-white text-gray-900 px-3 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-slate-100 hover:text-slate-800 focus:z-10"
+      >
+        React
+      </button>
+      <button
+        type="button"
+        onclick="setFramework('Vuejs')"
+        id="f-vue"
+        class="relative -ml-px inline-flex items-center rounded-r-md bg-white text-gray-900 px-3 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-slate-100 hover:text-slate-800 focus:z-10"
+      >
+        Vue.js
+      </button>
+      <button
+        type="button"
+        onclick="setFramework('Svelte')"
+        id="f-svelte"
+        class="relative -ml-px inline-flex items-center rounded-r-md bg-white text-gray-900 px-3 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-slate-100 hover:text-slate-800 focus:z-10"
+      >
+        Svelte
+      </button>
+    </div>
+
+    <button
+      onclick="onGenerate()"
+      class="rounded-md ml-auto bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600"
+    >
+      Write code
+    </button>
+  </div>
+
+
+  <div class="min-w-full flex items-center p-4 gap-4">
+    <div
+      class="flex flex-1 items-center justify-between text-white bg-gray-900 max-w font-mono text-sm my-4 py-3 px-4 rounded-md"
+    >
+      <div class="flex gap-1">
+
+        <code></code>
+      </div>
+      <!-- <span
+        class="flex text-white cursor-pointer w-5 h-5 hover:text-gray-400 duration-200"
+      >
+        <svg
+          class="fill-current"
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          x="0px"
+          y="0px"
+          viewBox="0 0 115.77 122.88"
+          style="enable-background: new 0 0 115.77 122.88"
+          xml:space="preserve"
+        >
+          <style type="text/css">
+            .st0 {
+              fill-rule: evenodd;
+              clip-rule: evenodd;
+            }
+          </style>
+          <g>
+            <path
+              class="st0"
+              d="M89.62,13.96v7.73h12.19h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v0.02 v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-0.02h-61.7H40.1v-0.02 c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02v-0.02V92.51H13.96h-0.01v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1 c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7 h0.01v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02V13.96L89.62,13.96z M79.04,21.69v-7.73v-0.02h0.02 c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v64.59v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h12.19V35.65 v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07v-0.02h0.02H79.04L79.04,21.69z M105.18,108.92V35.65v-0.02 h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1v0.02h-0.01h-61.7h-0.02v-0.02c-0.91,0-1.75,0.39-2.37,1.01 c-0.61,0.61-1,1.46-1,2.37h0.02v0.01v73.27v0.02h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1v-0.02h0.01h61.7h0.02 v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37h-0.02V108.92L105.18,108.92z"
+            />
+          </g>
+        </svg>
+      </span> -->
+    </div>
+  </div>
+
+  <div id="code-container"></div>
+  <div
+    class="relative mx-4 rounded-md mt-4 isolate flex items-center gap-x-6 overflow-hidden border bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1"
+  >
+    <div
+      class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+      aria-hidden="true"
+    >
+      <div
+        class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+        style="
+          clip-path: polygon(
+            74.8% 41.9%,
+            97.2% 73.2%,
+            100% 34.9%,
+            92.5% 0.4%,
+            87.5% 0%,
+            75% 28.6%,
+            58.5% 54.6%,
+            50.1% 56.8%,
+            46.9% 44%,
+            48.3% 17.4%,
+            24.7% 53.9%,
+            0% 27.9%,
+            11.9% 74.2%,
+            24.9% 54.1%,
+            68.6% 100%,
+            74.8% 41.9%
+          );
+        "
+      ></div>
+    </div>
+    <div
+      class="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
+      aria-hidden="true"
+    >
+      <div
+        class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30"
+        style="
+          clip-path: polygon(
+            74.8% 41.9%,
+            97.2% 73.2%,
+            100% 34.9%,
+            92.5% 0.4%,
+            87.5% 0%,
+            75% 28.6%,
+            58.5% 54.6%,
+            50.1% 56.8%,
+            46.9% 44%,
+            48.3% 17.4%,
+            24.7% 53.9%,
+            0% 27.9%,
+            11.9% 74.2%,
+            24.9% 54.1%,
+            68.6% 100%,
+            74.8% 41.9%
+          );
+        "
+      ></div>
+    </div>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 min-w-full">
+      <p class="text-sm leading-6 text-gray-900 flex w-full items-center flex">
+        Made with
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          class="px-1"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M11.9932 5.13581C9.9938 2.7984 6.65975 2.16964 4.15469 4.31001C1.64964 6.45038 1.29697 10.029 3.2642 12.5604C4.89982 14.6651 9.84977 19.1041 11.4721 20.5408C11.6536 20.7016 11.7444 20.7819 11.8502 20.8135C11.9426 20.8411 12.0437 20.8411 12.1361 20.8135C12.2419 20.7819 12.3327 20.7016 12.5142 20.5408C14.1365 19.1041 19.0865 14.6651 20.7221 12.5604C22.6893 10.029 22.3797 6.42787 19.8316 4.31001C17.2835 2.19216 13.9925 2.7984 11.9932 5.13581Z"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        by
+        <strong class="font-semibold pl-1"
+          ><a href="https://andreaswissel.com" target="_blank">Andreas Wissel</a></strong
+        >
+        <a
+          href="https://x.com/andreas_wissel"
+          target="_blank"
+          class="flex-none ml-auto rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+        >
+          Support & Feedback &nbsp;
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const codeBlock = document.querySelector("code");
+    let loadingInterval;
+    
+    document.addEventListener("DOMContentLoaded", (event) => {
+      const htmlContent = marked(`**ComponentsGPT is ready. Waiting for component input..**`);
+      codeBlock.innerHTML = htmlContent;
+    });
+
+    function onSetApiKey() {
+      const key = document.querySelector('#api-key').value;
+
+      parent.postMessage({ pluginMessage: `setApiKey.${key}` }, "*")
+    }
+
+    function onGenerate() {
+      //console.log(`onclick called`);
+
+      loadingInterval = activateLoadingIndicator();
+      parent.postMessage({ pluginMessage: "generate" }, "*");
+    }
+
+    function activateLoadingIndicator() {
+      let count = 1;
+      return setInterval(() => {
+        count = count < 4 ? count+1 : 1;
+        codeBlock.textContent = `Writing code${`.`.repeat(count)}`;
+      }, 250)
+    }
+
+    function setFramework(framework) {
+      const activeClasses = ['bg-gray-900','text-white'];
+      const inactiveClasses = ['bg-white','text-gray-900']
+      document.querySelectorAll('#frameworks button').forEach(e => {
+        e.classList.remove(...activeClasses);
+        e.classList.add(...inactiveClasses);
+      })
+
+      document.querySelector(`#f-${framework.toLowerCase()}`).classList.remove(...inactiveClasses);
+      document.querySelector(`#f-${framework.toLowerCase()}`).classList.add(...activeClasses);
+      parent.postMessage({ pluginMessage: `setFramework.${framework}` }, "*");
+    }
+
+    onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      //console.log(`DEBUG: `, msg.type, msg);
+
+      if (!msg.type) return;
+
+      if (msg.type == `error`) {
+        const htmlContent = marked(`**Error:** ${msg.message}`);
+        codeBlock.innerHTML = htmlContent;
+        // Prism.highlightAll();
+      }
+
+      if (msg.type == "showResponse") {
+        if(msg.message['component'].length > 0) {
+          codeBlock.innerHTML = `Done. Here's your component:`;
+          
+          document.querySelector('#code-container').innerHTML = ``;
+          for(let key in msg.message) {
+            let lang;
+
+            switch(key) {
+              case "component": 
+                lang = 'js';
+                break;
+              case "css": 
+                lang = "css";
+                break;
+              case "story":
+                lang = "js";
+                break;
+              case "html":
+                lang = "html";
+                break;
+            }
+
+            document.querySelector('#code-container').innerHTML += `
+            <div class="flex flex-1 items-center justify-between text-white bg-gray-900 max-w font-mono text-sm my-4 py-3 px-4 rounded-md">
+              <pre><code class="language-${lang}">${marked(msg.message[key])}</code></pre>
+            </div>
+            `
+          }
+        } 
+        clearInterval(loadingInterval);
+        //console.log(`highlight with Prism`)
+        Prism.highlightAll();
+      }
+
+      if (msg.type == "frameworkUpdated") {
+        document.querySelector("#current-framework").innerHTML =
+          msg.currentFramework;
+      }
+
+      if (msg.type == "apiKeyRetrieved") {
+        //console.log(`apiKEy retrived ${msg}`)
+          document.querySelector('#api-key').value = msg.key;
+      }
+    };
+  </script>
+</div>
